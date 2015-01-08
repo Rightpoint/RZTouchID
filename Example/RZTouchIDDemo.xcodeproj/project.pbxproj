@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D41E4EF91A5ECCD800D7162A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EF81A5ECCD800D7162A /* main.m */; };
+		D41E4EFC1A5ECCD800D7162A /* RZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */; };
+		D41E4EFF1A5ECCD800D7162A /* RZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFE1A5ECCD800D7162A /* RZViewController.m */; };
+		D41E4F041A5ECCD800D7162A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F031A5ECCD800D7162A /* Images.xcassets */; };
+		D41E4F201A5ECD6C00D7162A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */; };
+		D41E4F211A5ECD6C00D7162A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */; };
+		D41E4F251A5ECD9400D7162A /* RZTouchID.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4F241A5ECD9400D7162A /* RZTouchID.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D41E4EF31A5ECCD800D7162A /* RZTouchIDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZTouchIDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D41E4EF71A5ECCD800D7162A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D41E4EF81A5ECCD800D7162A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D41E4EFA1A5ECCD800D7162A /* RZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZAppDelegate.h; sourceTree = "<group>"; };
+		D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAppDelegate.m; sourceTree = "<group>"; };
+		D41E4EFD1A5ECCD800D7162A /* RZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZViewController.h; sourceTree = "<group>"; };
+		D41E4EFE1A5ECCD800D7162A /* RZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZViewController.m; sourceTree = "<group>"; };
+		D41E4F031A5ECCD800D7162A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D41E4F1D1A5ECD6C00D7162A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
+		D41E4F1F1A5ECD6C00D7162A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		D41E4F231A5ECD9400D7162A /* RZTouchID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZTouchID.h; path = ../RZTouchID/RZTouchID.h; sourceTree = "<group>"; };
+		D41E4F241A5ECD9400D7162A /* RZTouchID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RZTouchID.m; path = ../RZTouchID/RZTouchID.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D41E4EF01A5ECCD800D7162A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D41E4EEA1A5ECCD800D7162A = {
+			isa = PBXGroup;
+			children = (
+				D41E4F221A5ECD8C00D7162A /* RZTouchID */,
+				D41E4EF51A5ECCD800D7162A /* RZTouchIDDemo */,
+				D41E4EF41A5ECCD800D7162A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D41E4EF41A5ECCD800D7162A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D41E4EF31A5ECCD800D7162A /* RZTouchIDDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D41E4EF51A5ECCD800D7162A /* RZTouchIDDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D41E4EFA1A5ECCD800D7162A /* RZAppDelegate.h */,
+				D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */,
+				D41E4EFD1A5ECCD800D7162A /* RZViewController.h */,
+				D41E4EFE1A5ECCD800D7162A /* RZViewController.m */,
+				D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */,
+				D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */,
+				D41E4F031A5ECCD800D7162A /* Images.xcassets */,
+				D41E4EF61A5ECCD800D7162A /* Supporting Files */,
+			);
+			path = RZTouchIDDemo;
+			sourceTree = "<group>";
+		};
+		D41E4EF61A5ECCD800D7162A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D41E4EF71A5ECCD800D7162A /* Info.plist */,
+				D41E4EF81A5ECCD800D7162A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D41E4F221A5ECD8C00D7162A /* RZTouchID */ = {
+			isa = PBXGroup;
+			children = (
+				D41E4F231A5ECD9400D7162A /* RZTouchID.h */,
+				D41E4F241A5ECD9400D7162A /* RZTouchID.m */,
+			);
+			name = RZTouchID;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D41E4EF21A5ECCD800D7162A /* RZTouchIDDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D41E4F161A5ECCD800D7162A /* Build configuration list for PBXNativeTarget "RZTouchIDDemo" */;
+			buildPhases = (
+				D41E4EEF1A5ECCD800D7162A /* Sources */,
+				D41E4EF01A5ECCD800D7162A /* Frameworks */,
+				D41E4EF11A5ECCD800D7162A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RZTouchIDDemo;
+			productName = RZTouchIDDemo;
+			productReference = D41E4EF31A5ECCD800D7162A /* RZTouchIDDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41E4EEB1A5ECCD800D7162A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Raizlabs;
+				TargetAttributes = {
+					D41E4EF21A5ECCD800D7162A = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = D41E4EEE1A5ECCD800D7162A /* Build configuration list for PBXProject "RZTouchIDDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D41E4EEA1A5ECCD800D7162A;
+			productRefGroup = D41E4EF41A5ECCD800D7162A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D41E4EF21A5ECCD800D7162A /* RZTouchIDDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D41E4EF11A5ECCD800D7162A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D41E4F211A5ECD6C00D7162A /* Main.storyboard in Resources */,
+				D41E4F201A5ECD6C00D7162A /* LaunchScreen.xib in Resources */,
+				D41E4F041A5ECCD800D7162A /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D41E4EEF1A5ECCD800D7162A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D41E4EFF1A5ECCD800D7162A /* RZViewController.m in Sources */,
+				D41E4EFC1A5ECCD800D7162A /* RZAppDelegate.m in Sources */,
+				D41E4F251A5ECD9400D7162A /* RZTouchID.m in Sources */,
+				D41E4EF91A5ECCD800D7162A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D41E4F1D1A5ECD6C00D7162A /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D41E4F1F1A5ECD6C00D7162A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D41E4F141A5ECCD800D7162A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D41E4F151A5ECCD800D7162A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D41E4F171A5ECCD800D7162A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RZTouchIDDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D41E4F181A5ECCD800D7162A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RZTouchIDDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D41E4EEE1A5ECCD800D7162A /* Build configuration list for PBXProject "RZTouchIDDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D41E4F141A5ECCD800D7162A /* Debug */,
+				D41E4F151A5ECCD800D7162A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D41E4F161A5ECCD800D7162A /* Build configuration list for PBXNativeTarget "RZTouchIDDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D41E4F171A5ECCD800D7162A /* Debug */,
+				D41E4F181A5ECCD800D7162A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41E4EEB1A5ECCD800D7162A /* Project object */;
+}
