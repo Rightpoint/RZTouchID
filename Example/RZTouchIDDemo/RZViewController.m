@@ -21,7 +21,7 @@
 {
     [super viewWillAppear:animated];
     
-    if ( ![RZTouchID touchIdAvailable] ) {
+    if ( ![RZTouchID touchIDAvailable] ) {
         [self showAlertViewWithTitle:@"TouchID Unavailable" message:@"This demo MUST be run on a device with TouchID (iPhone 5s, iPhone 6, iPhone 6+)"];
         
         self.contentView.hidden = YES;
