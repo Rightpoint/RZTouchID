@@ -29,6 +29,8 @@
 @import LocalAuthentication.LAContext;
 #import "RZTouchID.h"
 
+NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
+
 @interface RZTouchID ()
 
 @property (copy, nonatomic, readwrite) NSString *keychainServicePrefix;
@@ -39,7 +41,7 @@
 
 #pragma mark - public methods
 
-+ (BOOL)touchIdAvailable
++ (BOOL)touchIDAvailable
 {
     BOOL available = NO;
     
@@ -119,7 +121,7 @@
 
 - (void)retrievePasswordWithIdentifier:(NSString *)identifier withPrompt:(NSString *)prompt completion:(RZTouchIDCompletion)completion
 {
-    if ( [[self class] touchIdAvailable] ) {
+    if ( [[self class] touchIDAvailable] ) {
         CFErrorRef error = NULL;
         SecAccessControlRef accessObject;
         
@@ -188,7 +190,7 @@
 - (NSError *)errorForOsStatus:(OSStatus)status
 {
     if ( status != errSecSuccess ) {
-        return [NSError errorWithDomain:@"com.raizlabs.touchID" code:status userInfo:@{ NSLocalizedDescriptionKey : [self keychainErrorToString:status]}];
+        return [NSError errorWithDomain:kRZTouchIDErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey : [self keychainErrorToString:status]}];
     }
     else {
         return nil;

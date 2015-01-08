@@ -37,6 +37,11 @@
  */
 typedef void (^RZTouchIDCompletion)(NSString *password, NSError *error);
 
+/**
+ *  The domain for errors returned in RZTouchIDCompletion blocks.
+ */
+OBJC_EXTERN NSString* const kRZTouchIDErrorDomain;
+
 @interface RZTouchID : NSObject
 
 /**
@@ -53,7 +58,7 @@ typedef void (^RZTouchIDCompletion)(NSString *password, NSError *error);
  *  Whether TouchID is currently available and configured with at least one finger and
  *  a passcode. If this method returns NO, then attempts to retrive passwords from the keychain using TouchID will fail.
  */
-+ (BOOL)touchIdAvailable;
++ (BOOL)touchIDAvailable;
 
 /**
  *  Return the RZTouchID object initialized with the service name prefix used to create unique keychain keys.
