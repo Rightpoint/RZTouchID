@@ -10,14 +10,27 @@
 
 @implementation RZViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.touchID = [[RZTouchID alloc] initWithKeychainServicePrefix:@"com.raizlabs.demo"];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ( ![RZTouchID touchIdAvailable] ) {
+        [self showAlertViewWithTitle:@"TouchID Unavailable" message:@"This demo MUST be run on a device with TouchID (iPhone 5s, iPhone 6, iPhone 6+)"];
+        
+        self.contentView.hidden = YES;
+    }
+}
+
+- (void)showAlertViewWithTitle:(NSString *)title message:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 @end

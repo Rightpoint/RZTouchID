@@ -10,7 +10,6 @@
 		D41E4EF91A5ECCD800D7162A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EF81A5ECCD800D7162A /* main.m */; };
 		D41E4EFC1A5ECCD800D7162A /* RZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */; };
 		D41E4EFF1A5ECCD800D7162A /* RZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFE1A5ECCD800D7162A /* RZViewController.m */; };
-		D41E4F041A5ECCD800D7162A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F031A5ECCD800D7162A /* Images.xcassets */; };
 		D41E4F201A5ECD6C00D7162A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */; };
 		D41E4F211A5ECD6C00D7162A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */; };
 		D41E4F251A5ECD9400D7162A /* RZTouchID.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4F241A5ECD9400D7162A /* RZTouchID.m */; };
@@ -24,7 +23,6 @@
 		D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZAppDelegate.m; sourceTree = "<group>"; };
 		D41E4EFD1A5ECCD800D7162A /* RZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RZViewController.h; sourceTree = "<group>"; };
 		D41E4EFE1A5ECCD800D7162A /* RZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RZViewController.m; sourceTree = "<group>"; };
-		D41E4F031A5ECCD800D7162A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D41E4F1D1A5ECD6C00D7162A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		D41E4F1F1A5ECD6C00D7162A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		D41E4F231A5ECD9400D7162A /* RZTouchID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZTouchID.h; path = ../RZTouchID/RZTouchID.h; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				D41E4EFE1A5ECCD800D7162A /* RZViewController.m */,
 				D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */,
 				D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */,
-				D41E4F031A5ECCD800D7162A /* Images.xcassets */,
 				D41E4EF61A5ECCD800D7162A /* Supporting Files */,
 			);
 			path = RZTouchIDDemo;
@@ -151,7 +148,6 @@
 			files = (
 				D41E4F211A5ECD6C00D7162A /* Main.storyboard in Resources */,
 				D41E4F201A5ECD6C00D7162A /* LaunchScreen.xib in Resources */,
-				D41E4F041A5ECCD800D7162A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +221,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -260,7 +256,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -272,6 +268,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RZTouchIDDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -282,6 +279,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RZTouchIDDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

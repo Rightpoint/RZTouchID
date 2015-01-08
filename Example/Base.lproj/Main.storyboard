@@ -15,8 +15,35 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demo must be run on a device with TouchID (iPhone 5s, iPhone 6, iPhone 6+)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jz9-yg-DHc">
+                                <rect key="frame" x="180" y="250" width="240" height="101"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="RKN-oC-Itb"/>
+                                    <constraint firstAttribute="height" constant="101" id="jVr-O0-yed"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="POc-CE-AW8">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="POc-CE-AW8" secondAttribute="trailing" id="1Wd-fH-ikT"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="POc-CE-AW8" secondAttribute="bottom" id="6Bx-as-sdQ"/>
+                            <constraint firstAttribute="centerY" secondItem="jz9-yg-DHc" secondAttribute="centerY" id="RVN-Hx-czS"/>
+                            <constraint firstAttribute="centerX" secondItem="jz9-yg-DHc" secondAttribute="centerX" id="Rfh-Fv-pQS"/>
+                            <constraint firstItem="POc-CE-AW8" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="mGD-gy-bKd"/>
+                            <constraint firstItem="POc-CE-AW8" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="yvw-pO-ecK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contentView" destination="POc-CE-AW8" id="Jqy-zn-Zo8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
