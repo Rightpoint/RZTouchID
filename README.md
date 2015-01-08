@@ -28,7 +28,7 @@ Createa new Touch ID service with a unique keychain prefix:
 
 Add a password to the keychain:
 ``` obj-c
-// Store a password in the keychain for this TouchID service with a given identifier. 
+// Store a password in the keychain for this TouchID service with an identifier. 
 // The identifier can be any string used to identify the password, 
 // but might commonly be a username, email, etc.
 - (void)addPassword:(NSString *)password 
