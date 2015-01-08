@@ -22,7 +22,7 @@ Check that Touch ID is available on the device and that there are currently regi
 
 `+ (BOOL)touchIDAvailable;`
 
-Createa new Touch ID service with a unique keychain prefix:
+Create a new Touch ID service with a unique keychain prefix:
 
 `- (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix;`
 
