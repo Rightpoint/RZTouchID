@@ -44,7 +44,7 @@
     BOOL available = NO;
     
 #if !TARGET_IPHONE_SIMULATOR
-    Class contextClass = NSClassFromString(@"LAContext");
+    Class contextClass = [LAContext class];
     if ( contextClass != nil ) {
         static id context;
         
@@ -68,6 +68,7 @@
     self = [super init];
     if ( self ) {
         self.keychainServicePrefix = servicePrefix;
+        self.completionQueue = dispatch_get_main_queue();
     }
     return self;
 }
