@@ -12,7 +12,6 @@
 @interface RZViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
 @property (strong, nonatomic) RZTouchID *touchID;
 
