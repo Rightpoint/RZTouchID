@@ -56,7 +56,7 @@ Delete a password from the keychain:
 ```
 
 ## Author
-Adam Howitt, adam.howitt@raizlabs.com
+Adam Howitt, adam.howitt@raizlabs.com, [@earnshavian](https://twitter.com/earnshavian)
 
 ## License
 RZTouchID is available under the MIT license. See the LICENSE file for more info.
