@@ -130,6 +130,7 @@ and password "password"</string>
                             <constraint firstItem="avX-D6-Xep" firstAttribute="top" secondItem="ihP-Qa-RcG" secondAttribute="bottom" constant="59" id="rKk-bx-AFp"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="contentView" destination="kh9-bI-dsS" id="rcp-O4-4DC"/>
                         <outlet property="errorMessage" destination="aS0-bq-oBQ" id="OdP-5o-kVK"/>

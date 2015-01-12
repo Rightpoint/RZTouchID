@@ -65,7 +65,21 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     if ( [RZTouchID touchIDAvailable] && !self.touchIDHasBeenAutoPresented ) {
         [self presentTouchID];
     }
+    else if ( ![RZTouchID touchIDAvailable] ) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            UIAlertView *touchIdDemoAlert = [[UIAlertView alloc] initWithTitle:@"Touch ID" message:@"This device doesn't support touch ID - the demo will be a little... boring." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [touchIdDemoAlert rz_showWithCompletionBlock:nil];
+        });
+    }
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - Private methods
 
 - (void)showTouchIdReferences:(BOOL)show
 {

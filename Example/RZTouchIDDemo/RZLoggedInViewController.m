@@ -34,6 +34,11 @@
     self.disableTouchIDButton.hidden = self.touchIDLoginDisabled;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (IBAction)disableTouchID:(id)sender
 {
     NSString *loggedInUser = [[NSUserDefaults standardUserDefaults] objectForKey:kRZTouchIdLoggedInUser];

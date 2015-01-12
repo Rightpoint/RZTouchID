@@ -68,7 +68,7 @@
         self.delegate = alertDelegate;
         
         // Set associated object to retain it. Will be released when alertview deallocs, since delegate is weak reference.
-        objc_setAssociatedObject(self, "AlertViewCompletionDelegate", alertDelegate, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(self, _cmd, alertDelegate, OBJC_ASSOCIATION_RETAIN);
     }
     
     [self show];
