@@ -5,6 +5,8 @@
 ## Overview
 Touch ID is a fingerprint recognition feature available on the iPhone 5S, the iPhone 6/6+, and newest iPad models. It allows a user to unlock a device or make a payment using a fingerprint for authentication. Because Touch ID is primarily an authentication mechanism, it is also great for verifying user identity in lieu of a username and password combination in your application. Fingerprints are stored in the device's [Secure Enclave](http://support.apple.com/en-us/HT5949), so Touch ID allows users to fly through the login screen while still maintaining a high level of security.
 
+![RZTouchID in action](https://github.com/Raizlabs/RZTouchID/blob/master/rztouchid.gif "RZTouchID Demo Project")
+
 ## Installation
 Install using [CocoaPods](http://cocoapods.org) (recommended) by adding the following line to your Podfile:
 
