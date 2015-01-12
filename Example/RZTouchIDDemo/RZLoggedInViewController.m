@@ -25,6 +25,12 @@
     self.touchIDLoginDisabled = NO;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.disableTouchIDButton.enabled = !self.touchIDLoginDisabled;
+}
+
 - (IBAction)disableTouchID:(id)sender
 {
     NSString *loggedInUser = [[NSUserDefaults standardUserDefaults] objectForKey:kRZTouchIdLoggedInUser];
