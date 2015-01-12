@@ -207,11 +207,7 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 
 - (void)savePasswordToKeychain:(NSString *)password withCompletion:(RZTouchIDCompletion)completion
 {
-    [[RZAppDelegate sharedTouchIDInstance] addPassword:password withIdentifier:self.usernameTextField.text completion:^(NSString *password, NSError *error) {
-        if ( completion != nil ) {
-            completion(password,error);
-        }
-    }];
+    [[RZAppDelegate sharedTouchIDInstance] addPassword:password withIdentifier:self.usernameTextField.text completion:completion];
 }
 
 - (void)removePasswordFromKeychain
