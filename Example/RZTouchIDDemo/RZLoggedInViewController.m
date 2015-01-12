@@ -11,24 +11,27 @@
 #import "RZAppDelegate.h"
 #import "RZViewController.h"
 
-
 @interface RZLoggedInViewController ()
+
 @property (weak, nonatomic) IBOutlet UIButton *disableTouchIDButton;
 
 @end
 
 @implementation RZLoggedInViewController
 
-- (void)viewDidLoad
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    [super viewDidLoad];
-    self.touchIDLoginDisabled = NO;
+    self = [super initWithCoder:aDecoder];
+    if ( self ) {
+        self.touchIDLoginDisabled = NO;
+    }
+    return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.disableTouchIDButton.enabled = !self.touchIDLoginDisabled;
+    self.disableTouchIDButton.hidden = self.touchIDLoginDisabled;
 }
 
 - (IBAction)disableTouchID:(id)sender
@@ -39,4 +42,5 @@
         self.touchIDLoginDisabled = YES;
     }];
 }
+
 @end

@@ -15,7 +15,5 @@ OBJC_EXTERN NSString* const kRZTouchIdLoggedInUser;
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
-@property (strong, nonatomic) RZTouchID *touchID;
-
 @end
 

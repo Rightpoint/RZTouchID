@@ -41,17 +41,6 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="obL-LW-ok7"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjW-R9-sQj">
-                                <rect key="frame" x="131" y="352" width="131" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="i9S-LI-ysT" kind="modal" identifier="loginSuccess" modalTransitionStyle="coverVertical" id="H8z-Jm-n0q"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14o-fq-oVz">
                                 <rect key="frame" x="19" y="226" width="79" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -101,6 +90,18 @@ and password "password"</string>
                                 <color key="textColor" red="0.84313725490000002" green="0.2470588235" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjW-R9-sQj">
+                                <rect key="frame" x="130" y="352" width="131" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7cq-vx-jx1"/>
+                                    <segue destination="i9S-LI-ysT" kind="modal" identifier="loginSuccess" modalTransitionStyle="coverVertical" id="H8z-Jm-n0q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.086274509803921567" green="0.070588235294117646" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

@@ -8,6 +8,7 @@
 
 @import UIKit;
 @class RZTouchID;
+
 @interface RZAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
