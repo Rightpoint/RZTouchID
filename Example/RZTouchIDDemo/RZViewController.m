@@ -79,7 +79,6 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
         self.touchIdWidthConstraint.constant = 0.0f;
         self.touchIDButton.hidden = YES;
     }
-//    [self.view layoutIfNeeded];
 }
 
 - (BOOL)authenticationSuccessful
