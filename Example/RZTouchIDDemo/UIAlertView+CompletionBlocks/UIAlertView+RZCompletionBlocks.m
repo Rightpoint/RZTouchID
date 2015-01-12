@@ -28,7 +28,7 @@
 //
 
 #import "UIAlertView+RZCompletionBlocks.h"
-#import <objc/runtime.h>
+@import ObjectiveC.runtime;
 
 @interface AlertViewCompletionDelegate : NSObject <UIAlertViewDelegate>
 
@@ -43,7 +43,7 @@
 - (id)initWithCompletionBlock:(RZAlertViewCompletionBlock)completion
 {
     self = [super init];
-    if (self){
+    if ( self ) {
         self.completionBlock = completion;
     }
     return self;
@@ -51,7 +51,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (self.completionBlock){
+    if ( self.completionBlock ) {
         self.completionBlock(buttonIndex);
         self.completionBlock = nil; // prevent retain cycle if completion block captures alertView
     }
@@ -63,7 +63,7 @@
 
 - (void)rz_showWithCompletionBlock:(RZAlertViewCompletionBlock)completion
 {
-    if (completion){
+    if ( completion ) {
         AlertViewCompletionDelegate *alertDelegate = [[AlertViewCompletionDelegate alloc] initWithCompletionBlock:completion];
         self.delegate = alertDelegate;
         

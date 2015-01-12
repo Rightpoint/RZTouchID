@@ -8,7 +8,7 @@
 
 @import UIKit;
 #import "RZTouchID.h"
-OBJC_EXTERN NSString* const kRZTouchIDLoginSuccessSegueIdentifier;
+
 OBJC_EXTERN NSString* const kRZTouchIdLoggedInUser;
 
 @interface RZViewController : UIViewController

@@ -19,14 +19,14 @@
 
 @implementation RZLoggedInViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.touchIDLoginDisabled = NO;
-    
 }
 
-- (IBAction)disableTouchID:(id)sender {
+- (IBAction)disableTouchID:(id)sender
+{
     NSString *loggedInUser = [[NSUserDefaults standardUserDefaults] objectForKey:kRZTouchIdLoggedInUser];
     [[RZAppDelegate sharedTouchIDInstance] deletePasswordWithIdentifier:loggedInUser completion:^(NSString *password, NSError *error) {
         self.disableTouchIDButton.hidden = YES;

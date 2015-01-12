@@ -19,6 +19,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
 
 @interface RZViewController ()
 
+// Outlets
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
@@ -30,11 +31,11 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordLeftEdgeConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 
-
-
+// State
 @property (assign, nonatomic) BOOL touchIDPasswordExists;
 @property (assign, nonatomic) BOOL touchIDHasBeenAutoPresented;
 
+// Animation constants
 @property (assign, nonatomic) CGFloat submitButtonRightEdgeConstraintInitialConstant;
 @property (assign, nonatomic) CGFloat touchIdWidthConstraintInitialConstant;
 
@@ -62,7 +63,6 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
     [self showTouchIdReferences:YES];
     
     if ( ![RZTouchID touchIDAvailable] ) {
-        //[self showAlertViewWithTitle:@"TouchID Unavailable" message:@"This demo MUST be run on a device with TouchID (iPhone 5s, iPhone 6, iPhone 6+)"];
         [self showTouchIdReferences:NO];
     }
     else {
@@ -87,14 +87,15 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
     [self.view layoutIfNeeded];
 }
 
-- (BOOL)authenticationSuccessful {
+- (BOOL)authenticationSuccessful
+{
     return [self.usernameTextField.text isEqualToString:kRZTouchIDDefaultUserName] && [self.passwordTextField.text isEqualToString:kRZTouchIDDefaultPassword];
 }
 
-- (IBAction)touchIdLaunchTapped:(id)sender {
+- (IBAction)touchIdLaunchTapped:(id)sender
+{
     [self.view endEditing:YES];
     [self presentTouchID];
-    
 }
 
 - (void)showErrorAnimated:(BOOL)animated
@@ -153,7 +154,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
         else {
             wself.touchIDHasBeenAutoPresented = YES;
             wself.touchIDPasswordExists = YES;
-            self.passwordTextField.text = password;
+            wself.passwordTextField.text = password;
             if ( [wself shouldPerformSegueWithIdentifier:kRZTouchIDLoginSuccessSegueIdentifier sender:wself] ) {
                 [wself performSegueWithIdentifier:kRZTouchIDLoginSuccessSegueIdentifier sender:wself];
             }
@@ -189,7 +190,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
                 UIAlertView *useTouchIDAlertView = [[UIAlertView alloc] initWithTitle:@"Touch ID" message:@"Would you like to enable touch ID to make it easier to login in the future?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
                 [useTouchIDAlertView rz_showWithCompletionBlock:^(NSInteger dismissalButtonIndex) {
                     if ( dismissalButtonIndex != useTouchIDAlertView.cancelButtonIndex ) {
-                        [wself savePasswordToKeychain:self.passwordTextField.text withCompletion:nil];
+                        [wself savePasswordToKeychain:wself.passwordTextField.text withCompletion:nil];
                     }
                     else {
                         [wself removePasswordFromKeychain];
@@ -219,7 +220,8 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if ( [textField isEqual:self.usernameTextField] ) {
         [self.passwordTextField becomeFirstResponder];
     }
