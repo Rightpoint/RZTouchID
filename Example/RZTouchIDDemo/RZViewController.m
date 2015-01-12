@@ -9,6 +9,8 @@
 #import "RZViewController.h"
 #import "RZAppDelegate.h"
 #import "UIAlertView+RZCompletionBlocks.h"
+#import "RZLoggedInViewController.h"
+
 
 NSString* const kRZTouchIDLoginSuccessSegueIdentifier   = @"loginSuccess";
 NSString* const kRZTouchIdLoggedInUser                  = @"loggedInUser";
@@ -82,7 +84,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
         self.touchIdWidthConstraint.constant = 0.0f;
         self.touchIDButton.hidden = YES;
     }
-
+    [self.view layoutIfNeeded];
 }
 
 - (BOOL)authenticationSuccessful {
@@ -105,6 +107,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
     CGFloat springVelocity = 1.0f;
     self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
     self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
+    
     [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.errorMessage.alpha = 1.0f;
         [self.view layoutIfNeeded];
@@ -204,6 +207,11 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
 
 - (IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
 {
+    RZLoggedInViewController *sourceVC = (RZLoggedInViewController *)unwindSegue.sourceViewController;
+    if ( sourceVC.touchIDLoginDisabled ) {
+        [self showTouchIdReferences:NO];
+    }
+    
     self.passwordTextField.text = @"";
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kRZTouchIdLoggedInUser];
     [[NSUserDefaults standardUserDefaults] synchronize];

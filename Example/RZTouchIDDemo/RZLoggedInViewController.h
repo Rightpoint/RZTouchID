@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RZLoggedInViewController : UIViewController
-
+@property (assign, nonatomic) BOOL touchIDLoginDisabled;
 @end

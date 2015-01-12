@@ -137,6 +137,7 @@ and password "password"</string>
                         <outlet property="passwordRightEdgeConstraint" destination="kQN-yG-qvH" id="BtA-OK-vEQ"/>
                         <outlet property="passwordTextField" destination="TeX-vF-exh" id="fIr-IG-hao"/>
                         <outlet property="submitButton" destination="NjW-R9-sQj" id="e2e-FA-QvI"/>
+                        <outlet property="submitButtonRightEdgeConstraint" destination="GRt-Kh-sJz" id="6cJ-cj-QUk"/>
                         <outlet property="touchIDButton" destination="O20-3x-G6E" id="ovg-hA-1dl"/>
                         <outlet property="touchIdWidthConstraint" destination="XQ7-eC-cFU" id="noX-xs-edR"/>
                         <outlet property="usernameTextField" destination="avX-D6-Xep" id="n0D-QH-Zvt"/>

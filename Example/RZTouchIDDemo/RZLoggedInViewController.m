@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.touchIDLoginDisabled = NO;
     
 }
 
@@ -29,6 +30,7 @@
     NSString *loggedInUser = [[NSUserDefaults standardUserDefaults] objectForKey:kRZTouchIdLoggedInUser];
     [[RZAppDelegate sharedTouchIDInstance] deletePasswordWithIdentifier:loggedInUser completion:^(NSString *password, NSError *error) {
         self.disableTouchIDButton.hidden = YES;
+        self.touchIDLoginDisabled = YES;
     }];
 }
 @end
