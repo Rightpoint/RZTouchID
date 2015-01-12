@@ -24,6 +24,12 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *submitButtonRightEdgeConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *passwordHint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *touchIdWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordRightEdgeConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordLeftEdgeConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
+
+
+
 @property (assign, nonatomic) BOOL touchIDPasswordExists;
 @property (assign, nonatomic) BOOL touchIDHasBeenAutoPresented;
 
@@ -39,7 +45,8 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
     [super viewDidLoad];
     self.usernameTextField.text = kRZTouchIDDefaultUserName;
     self.passwordHint.text = [NSString stringWithFormat:@"Try the username \"%@\"\n and password \"%@\"",kRZTouchIDDefaultUserName,kRZTouchIDDefaultPassword];
-    
+
+    self.errorMessage.alpha = 0.0f;
     self.touchIDPasswordExists = NO;
     self.touchIDHasBeenAutoPresented = NO;
     self.submitButtonRightEdgeConstraintInitialConstant = self.submitButtonRightEdgeConstraint.constant;
@@ -86,6 +93,44 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
     [self.view endEditing:YES];
     [self presentTouchID];
     
+}
+
+- (void)showErrorAnimated:(BOOL)animated
+{
+    
+    CGFloat leftEdgeInitial = self.passwordLeftEdgeConstraint.constant;
+    CGFloat rightEdgeInitial = self.passwordRightEdgeConstraint.constant;
+    CGFloat animationDuration = 0.1f;
+    CGFloat damping = 0.65f;
+    CGFloat springVelocity = 1.0f;
+    self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
+    self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
+    [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.errorMessage.alpha = 1.0f;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.passwordRightEdgeConstraint.constant = rightEdgeInitial + 10.0f;
+        self.passwordLeftEdgeConstraint.constant = leftEdgeInitial - 10.0f;
+        [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
+            self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
+            [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [self.view layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                self.passwordRightEdgeConstraint.constant = rightEdgeInitial ;
+                self.passwordLeftEdgeConstraint.constant = leftEdgeInitial ;
+                [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    [self.view layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:1.4f animations:^{
+                        self.errorMessage.alpha = 0.0f;
+                    }];
+                }];
+            }];
+        }];
+    }];
 }
 
 #pragma mark - RZTouchID helpers
@@ -151,7 +196,7 @@ NSString* const kRZTouchIDDefaultPassword               = @"password";
             return YES;
         }
         else {
-            [[[UIAlertView alloc] initWithTitle:@"No dice!" message:@"Please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [self showErrorAnimated:YES];
         }
     }
     return NO;
