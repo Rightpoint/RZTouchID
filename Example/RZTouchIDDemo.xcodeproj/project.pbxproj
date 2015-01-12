@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE509FC21A5EFCAC008FB3BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE509FC11A5EFCAC008FB3BB /* Assets.xcassets */; };
+		BE509FC51A602718008FB3BB /* RZLoggedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE509FC41A602718008FB3BB /* RZLoggedInViewController.m */; };
+		BE509FCC1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = BE509FCB1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.m */; };
 		D41E4EF91A5ECCD800D7162A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EF81A5ECCD800D7162A /* main.m */; };
 		D41E4EFC1A5ECCD800D7162A /* RZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */; };
 		D41E4EFF1A5ECCD800D7162A /* RZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D41E4EFE1A5ECCD800D7162A /* RZViewController.m */; };
@@ -16,6 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE509FC11A5EFCAC008FB3BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE509FC31A602718008FB3BB /* RZLoggedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZLoggedInViewController.h; sourceTree = "<group>"; };
+		BE509FC41A602718008FB3BB /* RZLoggedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZLoggedInViewController.m; sourceTree = "<group>"; };
+		BE509FCA1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+RZCompletionBlocks.h"; sourceTree = "<group>"; };
+		BE509FCB1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+RZCompletionBlocks.m"; sourceTree = "<group>"; };
 		D41E4EF31A5ECCD800D7162A /* RZTouchIDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RZTouchIDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D41E4EF71A5ECCD800D7162A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D41E4EF81A5ECCD800D7162A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,11 +48,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE509FC91A603FBA008FB3BB /* UIAlertView+CompletionBlocks */ = {
+			isa = PBXGroup;
+			children = (
+				BE509FCA1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.h */,
+				BE509FCB1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.m */,
+			);
+			name = "UIAlertView+CompletionBlocks";
+			path = "RZTouchIDDemo/UIAlertView+CompletionBlocks";
+			sourceTree = "<group>";
+		};
+		BE509FCD1A603FD3008FB3BB /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				BE509FCF1A604005008FB3BB /* Raizlabs */,
+			);
+			name = Externals;
+			sourceTree = "<group>";
+		};
+		BE509FCF1A604005008FB3BB /* Raizlabs */ = {
+			isa = PBXGroup;
+			children = (
+				BE509FC91A603FBA008FB3BB /* UIAlertView+CompletionBlocks */,
+				D41E4F221A5ECD8C00D7162A /* RZTouchID */,
+			);
+			name = Raizlabs;
+			sourceTree = "<group>";
+		};
 		D41E4EEA1A5ECCD800D7162A = {
 			isa = PBXGroup;
 			children = (
-				D41E4F221A5ECD8C00D7162A /* RZTouchID */,
 				D41E4EF51A5ECCD800D7162A /* RZTouchIDDemo */,
+				BE509FCD1A603FD3008FB3BB /* Externals */,
 				D41E4EF41A5ECCD800D7162A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +99,9 @@
 				D41E4EFB1A5ECCD800D7162A /* RZAppDelegate.m */,
 				D41E4EFD1A5ECCD800D7162A /* RZViewController.h */,
 				D41E4EFE1A5ECCD800D7162A /* RZViewController.m */,
+				BE509FC31A602718008FB3BB /* RZLoggedInViewController.h */,
+				BE509FC41A602718008FB3BB /* RZLoggedInViewController.m */,
+				BE509FC11A5EFCAC008FB3BB /* Assets.xcassets */,
 				D41E4F1C1A5ECD6C00D7162A /* LaunchScreen.xib */,
 				D41E4F1E1A5ECD6C00D7162A /* Main.storyboard */,
 				D41E4EF61A5ECCD800D7162A /* Supporting Files */,
@@ -147,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D41E4F211A5ECD6C00D7162A /* Main.storyboard in Resources */,
+				BE509FC21A5EFCAC008FB3BB /* Assets.xcassets in Resources */,
 				D41E4F201A5ECD6C00D7162A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,8 +197,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE509FCC1A603FBA008FB3BB /* UIAlertView+RZCompletionBlocks.m in Sources */,
 				D41E4EFF1A5ECCD800D7162A /* RZViewController.m in Sources */,
 				D41E4EFC1A5ECCD800D7162A /* RZAppDelegate.m in Sources */,
+				BE509FC51A602718008FB3BB /* RZLoggedInViewController.m in Sources */,
 				D41E4F251A5ECD9400D7162A /* RZTouchID.m in Sources */,
 				D41E4EF91A5ECCD800D7162A /* main.m in Sources */,
 			);

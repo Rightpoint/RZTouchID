@@ -7,11 +7,14 @@
 //
 
 @import UIKit;
+@class RZTouchID;
 
 @interface RZAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) RZTouchID *touchIDService;
 
++ (RZTouchID *)sharedTouchIDInstance;
 
 @end
 

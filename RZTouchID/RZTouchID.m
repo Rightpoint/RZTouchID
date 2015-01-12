@@ -146,7 +146,9 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             NSError *error = [self errorForOsStatus:status];
             
             CFRelease(accessObject);
-            CFRelease(passwordData);
+            if ( passwordData != NULL ) {
+                CFRelease(passwordData);
+            }
             
             if ( completion != nil ) {
                 dispatch_async(self.completionQueue, ^{

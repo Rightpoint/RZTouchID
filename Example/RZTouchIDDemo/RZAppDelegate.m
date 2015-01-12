@@ -17,4 +17,14 @@
     return YES;
 }
 
++ (RZTouchID *)sharedTouchIDInstance
+{
+    static RZTouchID *s_manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        s_manager = [[RZTouchID alloc] initWithKeychainServicePrefix:[[NSBundle mainBundle] bundleIdentifier]];
+    });
+    return s_manager;
+}
+
 @end

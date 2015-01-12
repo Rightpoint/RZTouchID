@@ -9,11 +9,11 @@
 @import UIKit;
 #import "RZTouchID.h"
 
+OBJC_EXTERN NSString* const kRZTouchIdLoggedInUser;
+
 @interface RZViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-
-@property (strong, nonatomic) RZTouchID *touchID;
 
 @end
 
