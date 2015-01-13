@@ -185,10 +185,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
         OSStatus status = SecItemDelete((__bridge CFDictionaryRef)(query));
         
         NSError *error = [self errorForSecStatus:status];
-        
+
         if ( completion != nil ) {
             dispatch_async(self.completionQueue, ^{
-                if ( error == nil ) {
+                // If we don't find the item in the keychain, it has the same net result as success
+                if ( error == nil || error.code == RZTouchIDErrorItemNotFound ) {
                     [self.delegate disableTouchIDForUserID:identifier];
                 }
                 completion(nil, error);

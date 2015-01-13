@@ -49,7 +49,7 @@
         NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDCollection withIdentifier:touchIDUserID];
         if ( foundUserIndex != NSNotFound ) {
             [touchIDUserIDCollection removeObjectAtIndex:foundUserIndex];
-            
+            [self saveTouchIDUserIDArray:touchIDUserIDCollection];
         }
     }
 }
