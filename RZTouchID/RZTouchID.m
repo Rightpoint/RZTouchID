@@ -284,7 +284,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     }
     if ( msg != nil ) {
         return [NSError errorWithDomain:kRZTouchIDErrorDomain code:rzTouchIDError userInfo:@{ NSLocalizedDescriptionKey : msg,
-                                                                                     NSLocalizedFailureReasonErrorKey:[NSString stringWithFormat:@"LAError:%ld, %@",error.code,error.localizedFailureReason]}];
+                                                                                     NSLocalizedFailureReasonErrorKey:[NSString stringWithFormat:@"LAError:%ld, %@",(long)error.code,error.localizedFailureReason]}];
     }
     else {
         return nil;
