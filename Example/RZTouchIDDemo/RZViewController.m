@@ -95,6 +95,11 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     }
 }
 
+/**
+ *  Create your own authentication mechanism e.g. webservice call with the userID and password
+ *
+ *  @return return YES if successful, otherwise NO.
+ */
 - (BOOL)authenticationSuccessful
 {
     return [self.usernameTextField.text isEqualToString:kRZTouchIDDefaultUserName] && [self.passwordTextField.text isEqualToString:kRZTouchIDDefaultPassword];
@@ -106,7 +111,8 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     [self presentTouchID];
 }
 
-- (IBAction)submitTapped:(id)sender {
+- (IBAction)submitTapped:(id)sender
+{
     if ( [self authenticationSuccessful] ) {
         [[NSUserDefaults standardUserDefaults] setObject:self.usernameTextField.text forKey:kRZTouchIdLoggedInUser];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -188,7 +194,7 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     __weak __typeof(self)wself = self;
     [[RZAppDelegate sharedTouchIDInstance] retrievePasswordWithIdentifier:self.usernameTextField.text withPrompt:@"Access your account" completion:^(NSString *password, NSError *error) {
         if ( password == nil || error != nil ) {
-            if ( error.code != errSecAuthFailed ) {
+            if ( error.code != RZTouchIDErrorAuthenticationFailed ) {
                 [wself showTouchIdReferences:NO];
                 wself.touchIDPasswordExists = NO;
             }
@@ -243,6 +249,17 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ( [textField isEqual:self.passwordTextField] ) {
+        BOOL useTouchID = ( [self.usernameTextField.text length] > 0 && [[RZAppDelegate sharedTouchIDInstance] touchIDAvailableForIdentifier:self.usernameTextField.text] );
+        [self showTouchIdReferences:useTouchID];
+        if ( useTouchID ) {
+            [self presentTouchID];
+        }
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
