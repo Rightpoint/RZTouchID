@@ -63,9 +63,9 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     return available;
 }
 
-- (BOOL)touchIDAvailableForIdentifier:(NSString *)userID
+- (BOOL)touchIDAvailableForIdentifier:(NSString *)identifier
 {
-    return ( userID != nil && userID.length > 0 && [self.class touchIDAvailable] && [self.delegate touchID:self shouldAddPasswordForIdentifier:userID] );
+    return ( identifier != nil && identifier.length > 0 && [self.class touchIDAvailable] && [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier] );
 }
 
 - (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix authenticationMode:(RZTouchIDMode)touchIDMode
@@ -120,7 +120,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             if ( completion != nil ) {
                 dispatch_async(self.completionQueue, ^{
                     if ( error == nil ) {
-                        [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier];
+                        [self.delegate touchID:self didAddPasswordForIdentifier:identifier];
                     }
                     completion(password, error);
                 });
@@ -172,7 +172,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             dispatch_async(self.completionQueue, ^{
                 // If we don't find the item in the keychain, it has the same net result as success
                 if ( error == nil || error.code == RZTouchIDErrorItemNotFound ) {
-                    [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier];
+                    [self.delegate touchID:self didDeletePasswordForIdentifier:identifier];
                 }
                 completion(nil, error);
             });

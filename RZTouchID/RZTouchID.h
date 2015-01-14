@@ -35,7 +35,7 @@
  * 
  *  Typically you might store the username using NSUserDefaults but you have freedom to implement this in however you see fit.  
  *  
- *  Be aware that if the mechanism you use is replicated to the cloud the userId might persist onto other devices but the keychain might not. In this case the user would experience login failures and have to manually enter the password.
+ *  Be aware that if the mechanism you use is replicated to the cloud the identifier might persist onto other devices but the keychain might not. In this case the user would experience login failures and have to manually enter the password.
  */
 @protocol RZTouchIDDelegate <NSObject>
 
@@ -49,14 +49,14 @@
 - (void)touchID:(RZTouchID *)touchID didDeletePasswordForIdentifier:(NSString *)identifier;
 
 /**
- *  Called by addPassword:withIdentifier:completion: on successfully writing the password to the keychain. If the keychain write fails you should not store the user ID as having a stored keychain password.
+ *  Called by addPassword:withIdentifier:completion: on successfully writing the password to the keychain. If the keychain write fails you should not store the identifier as having a stored keychain password.
  *
  *  @param identifier Typically a string representing a user. This might be an email, a UUID or a username.
  */
 - (void)touchID:(RZTouchID *)touchID didAddPasswordForIdentifier:(NSString *)identifier;
 
 /**
- *  Called by touchIDAvailable to determine if the device has touch ID enabled for the userID provided
+ *  Called by touchIDAvailableForIdentifier: to determine if the device has touch ID enabled for the identifier provided
  *
  *  @param identifier Typically a string representing a user. This might be an email, a UUID or a username.
  */
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, RZTouchIDError){
      */
     RZTouchIDErrorItemAlreadyExists,
     /**
-     *  The requested password wasn't found for the provided user identifier
+     *  The requested password wasn't found for the provided identifier
      */
     RZTouchIDErrorItemNotFound,
     /**
@@ -164,11 +164,11 @@ OBJC_EXTERN NSString* const kRZTouchIDErrorDomain;
  *  Whether TouchID is currently available and configured with at least one finger and
  *  a passcode. If this method returns NO, then attempts to retrive passwords from the keychain using TouchID will fail.
  *
- *  @param userID A string representing a user ID. This could be an email, a UUID or a username.
+ *  @param identifier A string representing an identifier. This could be an email, a UUID or a username.
  *
- *  @return Returns true if a passcode is set, the device supports touch ID and the userID provided has a password stored in the keychain.
+ *  @return Returns YES if a passcode is set, the device supports touch ID and the identifier provided has a password stored in the keychain.
  */
-- (BOOL)touchIDAvailableForIdentifier:(NSString *)userID;
+- (BOOL)touchIDAvailableForIdentifier:(NSString *)identifier;
 
 /**
  *  Return the RZTouchID object initialized with the service name prefix used to create unique keychain keys.
