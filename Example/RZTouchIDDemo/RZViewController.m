@@ -35,9 +35,10 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 @property (assign, nonatomic) BOOL touchIDPasswordExists;
 @property (assign, nonatomic) BOOL touchIDHasBeenAutoPresented;
 
-// Animation constants
+// Animation
 @property (assign, nonatomic) CGFloat submitButtonRightEdgeConstraintInitialConstant;
 @property (assign, nonatomic) CGFloat touchIdWidthConstraintInitialConstant;
+@property (assign, nonatomic) BOOL isAnimating;
 
 @end
 
@@ -46,6 +47,7 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.isAnimating = NO;
     self.usernameTextField.text = kRZTouchIDDefaultUserName;
     self.passwordHint.text = [NSString stringWithFormat:@"Try the username \"%@\"\n and password \"%@\"",kRZTouchIDDefaultUserName,kRZTouchIDDefaultPassword];
 
@@ -95,6 +97,11 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     }
 }
 
+/**
+ *  Create your own authentication mechanism e.g. webservice call with the userID and password
+ *
+ *  @return return YES if successful, otherwise NO.
+ */
 - (BOOL)authenticationSuccessful
 {
     return [self.usernameTextField.text isEqualToString:kRZTouchIDDefaultUserName] && [self.passwordTextField.text isEqualToString:kRZTouchIDDefaultPassword];
@@ -106,7 +113,8 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     [self presentTouchID];
 }
 
-- (IBAction)submitTapped:(id)sender {
+- (IBAction)submitTapped:(id)sender
+{
     if ( [self authenticationSuccessful] ) {
         [[NSUserDefaults standardUserDefaults] setObject:self.usernameTextField.text forKey:kRZTouchIdLoggedInUser];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -145,41 +153,47 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 
 - (void)showErrorAnimated:(BOOL)animated
 {
-    
-    CGFloat leftEdgeInitial = self.passwordLeftEdgeConstraint.constant;
-    CGFloat rightEdgeInitial = self.passwordRightEdgeConstraint.constant;
-    CGFloat animationDuration = 0.1f;
-    CGFloat damping = 0.65f;
-    CGFloat springVelocity = 1.0f;
-    self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
-    self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
-    
-    [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.errorMessage.alpha = 1.0f;
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.passwordRightEdgeConstraint.constant = rightEdgeInitial + 10.0f;
-        self.passwordLeftEdgeConstraint.constant = leftEdgeInitial - 10.0f;
+    if ( animated && !self.isAnimating ) {
+        self.isAnimating = YES;
+        CGFloat leftEdgeInitial = self.passwordLeftEdgeConstraint.constant;
+        CGFloat rightEdgeInitial = self.passwordRightEdgeConstraint.constant;
+        CGFloat animationDuration = 0.1f;
+        CGFloat damping = 0.65f;
+        CGFloat springVelocity = 1.0f;
+        self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
+        self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
+        
         [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.errorMessage.alpha = 1.0f;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
-            self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
-            self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
+            self.passwordRightEdgeConstraint.constant = rightEdgeInitial + 10.0f;
+            self.passwordLeftEdgeConstraint.constant = leftEdgeInitial - 10.0f;
             [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 [self.view layoutIfNeeded];
             } completion:^(BOOL finished) {
-                self.passwordRightEdgeConstraint.constant = rightEdgeInitial ;
-                self.passwordLeftEdgeConstraint.constant = leftEdgeInitial ;
+                self.passwordRightEdgeConstraint.constant = rightEdgeInitial - 10.0f;
+                self.passwordLeftEdgeConstraint.constant = leftEdgeInitial + 10.0f;
                 [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     [self.view layoutIfNeeded];
                 } completion:^(BOOL finished) {
-                    [UIView animateWithDuration:1.4f animations:^{
-                        self.errorMessage.alpha = 0.0f;
+                    self.passwordRightEdgeConstraint.constant = rightEdgeInitial ;
+                    self.passwordLeftEdgeConstraint.constant = leftEdgeInitial ;
+                    [UIView animateWithDuration:animationDuration delay:0.0f usingSpringWithDamping:damping initialSpringVelocity:springVelocity options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                        [self.view layoutIfNeeded];
+                    } completion:^(BOOL finished) {
+                        [UIView animateWithDuration:1.4f animations:^{
+                            self.errorMessage.alpha = 0.0f;
+                            self.isAnimating = NO;
+                        }];
                     }];
                 }];
             }];
         }];
-    }];
+    }
+    else {
+        self.errorMessage.alpha = 1.0f;
+    }
 }
 
 #pragma mark - RZTouchID helpers
@@ -188,7 +202,7 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
     __weak __typeof(self)wself = self;
     [[RZAppDelegate sharedTouchIDInstance] retrievePasswordWithIdentifier:self.usernameTextField.text withPrompt:@"Access your account" completion:^(NSString *password, NSError *error) {
         if ( password == nil || error != nil ) {
-            if ( error.code != errSecAuthFailed ) {
+            if ( error.code != RZTouchIDErrorAuthenticationFailed ) {
                 [wself showTouchIdReferences:NO];
                 wself.touchIDPasswordExists = NO;
             }
@@ -243,6 +257,17 @@ NSString* const kRZTouchIdLoggedInUser                         = @"loggedInUser"
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ( [textField isEqual:self.passwordTextField] ) {
+        BOOL useTouchID = ( [self.usernameTextField.text length] > 0 && [[RZAppDelegate sharedTouchIDInstance] touchIDAvailableForIdentifier:self.usernameTextField.text] );
+        [self showTouchIdReferences:useTouchID];
+        if ( useTouchID ) {
+            [self presentTouchID];
+        }
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

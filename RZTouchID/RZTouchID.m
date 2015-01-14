@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@import LocalAuthentication.LAContext;
+@import LocalAuthentication;
 #import "RZTouchID.h"
 
 NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
@@ -34,6 +34,8 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 @interface RZTouchID ()
 
 @property (copy, nonatomic, readwrite) NSString *keychainServicePrefix;
+@property (assign, nonatomic) RZTouchIDMode touchIDMode;
+@property (copy, nonatomic) NSString *localizedFallbackTitle;
 
 @end
 
@@ -48,12 +50,8 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 #if !TARGET_IPHONE_SIMULATOR
     Class contextClass = [LAContext class];
     if ( contextClass != nil ) {
-        static id context;
-        
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            context = [[contextClass alloc] init];
-        });
+        //User a new context for each check otherwise you may get a cached response.
+        id context = [contextClass new];
         
         NSError *error;
         //Check each time since canEvaluatePolicy can change within an app session if a user ads or removes fingers
@@ -65,12 +63,18 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     return available;
 }
 
-- (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix
+- (BOOL)touchIDAvailableForIdentifier:(NSString *)identifier
+{
+    return ( identifier != nil && identifier.length > 0 && [self.class touchIDAvailable] && [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier] );
+}
+
+- (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix authenticationMode:(RZTouchIDMode)touchIDMode
 {
     self = [super init];
     if ( self ) {
         self.keychainServicePrefix = servicePrefix;
         self.completionQueue = dispatch_get_main_queue();
+        self.touchIDMode = touchIDMode;
     }
     return self;
 }
@@ -96,22 +100,28 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
         
         // we want the operation to fail if there is an item which needs authentication so we will use
         // kSecUseNoAuthenticationUI
-        NSDictionary *attributes = @{
-                                     (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-                                     (__bridge id)kSecAttrService: [self serviceNameForIdentifier:identifier],
-                                     (__bridge id)kSecValueData: [password dataUsingEncoding:NSUTF8StringEncoding],
-                                     (__bridge id)kSecUseNoAuthenticationUI: @NO,
-                                     (__bridge id)kSecAttrAccessControl: (__bridge id)accessObject
-                                     };
+        NSMutableDictionary *attributes = [@{
+                         (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+                         (__bridge id)kSecAttrService: [self serviceNameForIdentifier:identifier],
+                         (__bridge id)kSecValueData: [password dataUsingEncoding:NSUTF8StringEncoding],
+                         (__bridge id)kSecUseNoAuthenticationUI: @NO
+                         } mutableCopy];
+
+        if ( self.touchIDMode == RZTouchIDModeBiometricKeychain ) {
+            [attributes setObject:(__bridge id)accessObject forKey:(__bridge id)kSecAttrAccessControl];
+        }
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             OSStatus status =  SecItemAdd((__bridge CFDictionaryRef)attributes, nil);
             CFRelease(accessObject);
             
-            NSError *error = [self errorForOsStatus:status];
+            NSError *error = [self errorForSecStatus:status];
 
             if ( completion != nil ) {
                 dispatch_async(self.completionQueue, ^{
+                    if ( error == nil ) {
+                        [self.delegate touchID:self didAddPasswordForIdentifier:identifier];
+                    }
                     completion(password, error);
                 });
             }
@@ -121,44 +131,28 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 
 - (void)retrievePasswordWithIdentifier:(NSString *)identifier withPrompt:(NSString *)prompt completion:(RZTouchIDCompletion)completion
 {
-    if ( [[self class] touchIDAvailable] ) {
-        CFErrorRef error = NULL;
-        SecAccessControlRef accessObject;
-        
-        accessObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, kSecAccessControlUserPresence, &error);
-        
-        //Check if password exists
-        NSDictionary *query = @{
-                                (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-                                (__bridge id)kSecAttrService: [self serviceNameForIdentifier:identifier],
-                                (__bridge id)kSecReturnData: @YES,
-                                (__bridge id)kSecUseOperationPrompt: prompt,
-                                (__bridge id)kSecAttrAccessControl: (__bridge id)accessObject
-                                };
-        
-        
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            CFTypeRef passwordData = NULL;
+    if ( [self touchIDAvailableForIdentifier:identifier] ) {
+        if ( self.touchIDMode ==  RZTouchIDModeLocalAuthentication ) {
+            //New context each time to avoid cached responses
+            LAContext *laContext = [LAContext new];
+            laContext.localizedFallbackTitle = self.localizedFallbackTitle;
+            __weak __typeof(self)wself = self;
+            [laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:prompt reply:^(BOOL success, NSError *error) {
+                if ( error == nil ) {
+                    [wself queryPasswordWithIdentifier:identifier withPrompt:prompt completion:completion];
+                }
+                else if ( completion != nil ) {
+                    completion(nil,[self errorForLAStatus:error]);
+                }
+            }];
             
-            OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)(query), &passwordData);
-            
-            NSString *password = [[NSString alloc] initWithData:(__bridge NSData *)passwordData encoding:NSUTF8StringEncoding];
-            NSError *error = [self errorForOsStatus:status];
-            
-            CFRelease(accessObject);
-            if ( passwordData != NULL ) {
-                CFRelease(passwordData);
-            }
-            
-            if ( completion != nil ) {
-                dispatch_async(self.completionQueue, ^{
-                    completion(password, error);
-                });
-            }
-        });
+        }
+        else {
+            [self queryPasswordWithIdentifier:identifier withPrompt:prompt completion:completion];
+        }
     }
     else if ( completion != nil )  {
-        completion(nil, [self errorForOsStatus:errSecNotAvailable]);
+        completion(nil, [self errorForSecStatus:errSecNotAvailable]);
     }
 }
 
@@ -172,10 +166,14 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         OSStatus status = SecItemDelete((__bridge CFDictionaryRef)(query));
         
-        NSError *error = [self errorForOsStatus:status];
-        
+        NSError *error = [self errorForSecStatus:status];
+
         if ( completion != nil ) {
             dispatch_async(self.completionQueue, ^{
+                // If we don't find the item in the keychain, it has the same net result as success
+                if ( error == nil || error.code == RZTouchIDErrorItemNotFound ) {
+                    [self.delegate touchID:self didDeletePasswordForIdentifier:identifier];
+                }
                 completion(nil, error);
             });
         }
@@ -184,47 +182,121 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 
 #pragma mark - private methods
 
+- (void)queryPasswordWithIdentifier:(NSString *)identifier withPrompt:(NSString *)prompt completion:(RZTouchIDCompletion)completion
+{
+    CFErrorRef error = NULL;
+    SecAccessControlRef accessObject;
+    
+    accessObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, kSecAccessControlUserPresence, &error);
+    
+    //Check if password exists
+    NSMutableDictionary *query = [@{
+                                         (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+                                         (__bridge id)kSecAttrService: [self serviceNameForIdentifier:identifier],
+                                         (__bridge id)kSecReturnData: @YES,
+                                         (__bridge id)kSecUseOperationPrompt: prompt
+                                         } mutableCopy];
+    
+    if ( self.touchIDMode == RZTouchIDModeBiometricKeychain ) {
+        [query setObject:(__bridge id)accessObject forKey:(__bridge id)kSecAttrAccessControl];
+    }
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        CFTypeRef passwordData = NULL;
+        
+        OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)(query), &passwordData);
+        
+        NSString *password = [[NSString alloc] initWithData:(__bridge NSData *)passwordData encoding:NSUTF8StringEncoding];
+        NSError *error = [self errorForSecStatus:status];
+
+        CFRelease(accessObject);
+        if ( passwordData != NULL ) {
+            CFRelease(passwordData);
+        }
+        
+        if ( completion != nil ) {
+            dispatch_async(self.completionQueue, ^{
+                completion(password, error);
+            });
+        }
+    });
+}
+
 - (NSString *)serviceNameForIdentifier:(NSString *)identifier
 {
     return [NSString stringWithFormat:@"%@.%lu",self.keychainServicePrefix, (unsigned long)identifier.hash];
 }
 
-- (NSError *)errorForOsStatus:(OSStatus)status
+- (NSError *)errorForLAStatus:(NSError *)error
 {
-    if ( status != errSecSuccess ) {
-        return [NSError errorWithDomain:kRZTouchIDErrorDomain code:status userInfo:@{ NSLocalizedDescriptionKey : [self keychainErrorToString:status]}];
+    RZTouchIDError rzTouchIDError;
+    NSString *msg = nil;
+    switch ((LAError)error.code) {
+        case kLAErrorAuthenticationFailed:
+        case kLAErrorUserCancel:
+        case kLAErrorUserFallback:
+        case kLAErrorSystemCancel: {
+            msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
+            rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+            break;
+        }
+        case kLAErrorPasscodeNotSet:
+        case kLAErrorTouchIDNotAvailable:
+        case kLAErrorTouchIDNotEnrolled: {
+            msg = NSLocalizedString(@"ERROR_KEYCHAIN_UNAVAILABLE", nil);
+            rzTouchIDError = RZTouchIDErrorTouchIDNotAvailable;
+            break;
+        }
+        default: {
+            msg = NSLocalizedString(@"UNKNOWN_ERROR", nil);
+            rzTouchIDError = RZTouchIDErrorUnknownError;
+            break;
+        }
+    }
+    if ( msg != nil ) {
+        return [NSError errorWithDomain:kRZTouchIDErrorDomain code:rzTouchIDError userInfo:@{ NSLocalizedDescriptionKey : msg,
+                                                                                     NSLocalizedFailureReasonErrorKey:[NSString stringWithFormat:@"LAError:%ld, %@",(long)error.code,error.localizedFailureReason]}];
     }
     else {
         return nil;
     }
 }
 
-- (NSString *)keychainErrorToString:(OSStatus)error
+- (NSError *)errorForSecStatus:(OSStatus)error
 {
-    NSString *msg = nil;
-    
-    switch (error) {
-        case errSecNotAvailable:
-            msg = NSLocalizedString(@"ERROR_KEYCHAIN_UNAVAILABLE", nil);
-            break;
-            
-        case errSecDuplicateItem:
-            msg = NSLocalizedString(@"ERROR_ITEM_ALREADY_EXISTS", nil);
-            break;
-            
-        case errSecItemNotFound :
-            msg = NSLocalizedString(@"ERROR_ITEM_NOT_FOUND", nil);
-            break;
-            
-        case errSecAuthFailed:
-            msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
-            
-        default:
-            msg = [@(error) stringValue];
-            break;
+    if ( error != errSecSuccess ) {
+        NSString *msg = nil;
+        RZTouchIDError rzTouchIDError;
+
+        switch (error) {
+            case errSecNotAvailable: {
+                msg = NSLocalizedString(@"ERROR_KEYCHAIN_UNAVAILABLE", nil);
+                rzTouchIDError = RZTouchIDErrorTouchIDNotAvailable;
+                break;
+            }
+            case errSecDuplicateItem: {
+                msg = NSLocalizedString(@"ERROR_ITEM_ALREADY_EXISTS", nil);
+                rzTouchIDError = RZTouchIDErrorItemAlreadyExists;
+                break;
+            }
+            case errSecItemNotFound: {
+                msg = NSLocalizedString(@"ERROR_ITEM_NOT_FOUND", nil);
+                rzTouchIDError = RZTouchIDErrorItemNotFound;
+                break;
+            }
+            case errSecAuthFailed: {
+                msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
+                rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+            }
+            default: {
+                msg = [@(error) stringValue];
+                rzTouchIDError = RZTouchIDErrorUnknownError;
+                break;
+            }
+        }
+        return [NSError errorWithDomain:kRZTouchIDErrorDomain code:rzTouchIDError userInfo:@{ NSLocalizedDescriptionKey : msg}];
     }
-    
-    return msg;
+    return nil;
 }
 
 @end
