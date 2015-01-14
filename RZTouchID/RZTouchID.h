@@ -28,9 +28,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class RZTouchID;
 
 /**
- *  RZTouchIDDelegate allows you to provide a custom mechanism for storing the touch ID enabled userID.
+ *  RZTouchIDDelegate allows you to provide a custom mechanism for storing the identifier (typically representing a user) associated with the password you are storing and protecting with touch ID.
  * 
  *  Typically you might store the username using NSUserDefaults but you have freedom to implement this in however you see fit.  
  *  
@@ -41,27 +42,25 @@
 /**
  *  Called by deletePasswordWithIdentifier:completion: 
  * 
- *  You should remove the provided UserID from your store of touch ID enabled User IDs.
+ *  You would typically remove the provided identifier from your store of touch ID enabled identifiers to avoid presenting touch ID UI for an identifier without a stored password.
  *
- *  @param touchIDUserID A string representing a user ID. This could be an email, a UUID or a username.
+ *  @param identifier Typically a string representing a user. This might be an email, a UUID or a username.
  */
-- (void)disableTouchIDForUserID:(NSString *)touchIDUserID;
+- (void)touchID:(RZTouchID *)touchID didDeletePasswordForIdentifier:(NSString *)identifier;
 
 /**
  *  Called by addPassword:withIdentifier:completion: on successfully writing the password to the keychain. If the keychain write fails you should not store the user ID as having a stored keychain password.
  *
- *  @param touchIDUserID A string representing a user ID. This could be an email, a UUID or a username.
+ *  @param identifier Typically a string representing a user. This might be an email, a UUID or a username.
  */
-- (void)setTouchIDUserID:(NSString *)touchIDUserID;
+- (void)touchID:(RZTouchID *)touchID didAddPasswordForIdentifier:(NSString *)identifier;
 
 /**
  *  Called by touchIDAvailable to determine if the device has touch ID enabled for the userID provided
  *
- *  @param touchIDUserID A string representing a user ID. This could be an email, a UUID or a username.
- *
- *  @return Should return YES if the user ID has a password stored in the kychain
+ *  @param identifier Typically a string representing a user. This might be an email, a UUID or a username.
  */
-- (BOOL)touchIDAvailableForUserID:(NSString *)touchIDUserID;
+- (BOOL)touchID:(RZTouchID *)touchID shouldAddPasswordForIdentifier:(NSString *)identifier;
 
 @end
 
@@ -157,7 +156,7 @@ OBJC_EXTERN NSString* const kRZTouchIDErrorDomain;
  *  Whether TouchID is currently available and configured with at least one finger and
  *  a passcode. If this method returns NO, then attempts to retrive passwords from the keychain using TouchID will fail.
  *
- *  @return Returns true if a passcode is set, the device supports touch ID
+ *  @return True if a passcode is set, the device supports touch ID
  */
 + (BOOL)touchIDAvailable;
 
@@ -176,7 +175,7 @@ OBJC_EXTERN NSString* const kRZTouchIDErrorDomain;
  *
  *  @param servicePrefix A unique name representing this login service in the keychain.
  */
-- (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix touchIDMode:(RZTouchIDMode)touchIDMode;
+- (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix authenticationMode:(RZTouchIDMode)touchIDMode;
 
 /**
  *  Provides a way of changing the title of the fallback option from the default or hiding it altogether.
@@ -195,7 +194,6 @@ OBJC_EXTERN NSString* const kRZTouchIDErrorDomain;
  *  @param completion   Called on the completionQueue when the keychain request is complete.
  *
  */
-
 - (void)addPassword:(NSString *)password withIdentifier:(NSString *)identifier completion:(RZTouchIDCompletion)completion;
 
 /**

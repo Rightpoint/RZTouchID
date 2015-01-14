@@ -16,5 +16,4 @@ Pod::Spec.new do |s|
 
   s.source_files = 'RZTouchID'
   s.frameworks = 'UIKit','LocalAuthentication'
-  s.dependency 'RZUtils/Categories/UIAlertView', '~> 2.3.1'
 end

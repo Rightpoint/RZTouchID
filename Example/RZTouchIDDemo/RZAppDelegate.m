@@ -30,7 +30,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         //Switch touchIDMode to RZTouchIDModeBiometricKeychain to try the biometric + passcode version. You'll see a Local Authentication login version if you have tested that first. Login and then disable touch ID and logout after making the touchIDMode switch.
-        s_manager = [[RZTouchID alloc] initWithKeychainServicePrefix:[[NSBundle mainBundle] bundleIdentifier] touchIDMode:RZTouchIDModeLocalAuthentication];
+        s_manager = [[RZTouchID alloc] initWithKeychainServicePrefix:[[NSBundle mainBundle] bundleIdentifier] authenticationMode:RZTouchIDModeLocalAuthentication];
         [s_manager setLocalizedFallbackTitle:@"Use yer password instead!"];
         s_manager.delegate = (id <RZTouchIDDelegate>)[[UIApplication sharedApplication] delegate];
     });
@@ -41,12 +41,12 @@
 /**
  *  In this demo app we maintain a list of accounts with touch ID protected passwords to support multiple accounts per user e.g. home and work email.
  */
-- (void)disableTouchIDForUserID:(NSString *)touchIDUserID
+- (void)touchID:(RZTouchID *)touchID didDeletePasswordForIdentifier:(NSString *)identifier
 {
     NSMutableArray *touchIDUserIDCollection = [self currentTouchIDUserIDArray];
     
-    if ( touchIDUserID != nil && [touchIDUserID length] > 0 ) {
-        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDCollection withIdentifier:touchIDUserID];
+    if ( identifier != nil && [identifier length] > 0 ) {
+        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDCollection withIdentifier:identifier];
         if ( foundUserIndex != NSNotFound ) {
             [touchIDUserIDCollection removeObjectAtIndex:foundUserIndex];
             [self saveTouchIDUserIDArray:touchIDUserIDCollection];
@@ -54,26 +54,26 @@
     }
 }
 
-- (void)setTouchIDUserID:(NSString *)touchIDUserID;
+- (void)touchID:(RZTouchID *)touchID didAddPasswordForIdentifier:(NSString *)identifier
 {
     NSMutableArray *touchIDUserIDArray = [self currentTouchIDUserIDArray];
 
-    if ( touchIDUserID != nil && [touchIDUserID length] > 0 ) {
-        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDArray withIdentifier:touchIDUserID];
+    if ( identifier != nil && [identifier length] > 0 ) {
+        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDArray withIdentifier:identifier];
         if ( foundUserIndex == NSNotFound ) {
-            [touchIDUserIDArray addObject:touchIDUserID];
+            [touchIDUserIDArray addObject:identifier];
             [self saveTouchIDUserIDArray:touchIDUserIDArray];
         }
     }
 }
 
-- (BOOL)touchIDAvailableForUserID:(NSString *)touchIDUserID
+- (BOOL)touchID:(RZTouchID *)touchID shouldAddPasswordForIdentifier:(NSString *)identifier
 {
     BOOL available = NO;
     NSArray *touchIDUserIDArray = [self currentTouchIDUserIDArray];
     
-    if ( touchIDUserID != nil && [touchIDUserID length] > 0 ) {
-        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDArray withIdentifier:touchIDUserID];
+    if ( identifier != nil && [identifier length] > 0 ) {
+        NSUInteger foundUserIndex = [self findUserInArray:touchIDUserIDArray withIdentifier:identifier];
         if ( foundUserIndex != NSNotFound ) {
             available = YES;
         }
