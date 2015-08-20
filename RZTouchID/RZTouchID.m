@@ -95,6 +95,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
                     completion(nil, (__bridge NSError *)addError);
                 });
             }
+			
+			if ( accessObject != NULL ) {
+				CFRelease(accessObject);
+			}
+			
             return;
         }
         
