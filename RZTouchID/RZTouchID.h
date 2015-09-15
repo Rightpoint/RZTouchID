@@ -118,7 +118,11 @@ typedef NS_ENUM(NSUInteger, RZTouchIDError){
      */
     RZTouchIDErrorItemNotFound,
     /**
-     *  Touch ID authentication failure - either user cancelled, user hit the fallback option, system cancelled auth (e.g. another app came to foreground) or the user failed to match their fingerprint or passcode
+     *  User canceled the system prompt to authenticate with Touch ID.
+     */
+    RZTouchIDErrorUserCanceled,
+    /**
+     *  Touch ID authentication failure - either user hit the fallback option, system cancelled auth (e.g. another app came to foreground) or the user failed to match their fingerprint or passcode
      */
     RZTouchIDErrorAuthenticationFailed,
     /**

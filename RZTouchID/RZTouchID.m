@@ -284,6 +284,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
                 rzTouchIDError = RZTouchIDErrorItemNotFound;
                 break;
             }
+            case errSecUserCanceled: {
+                msg = NSLocalizedString(@"ERROR_USER_CANCELED", nil);
+                rzTouchIDError = RZTouchIDErrorUserCanceled;
+                break;
+            }
             case errSecAuthFailed: {
                 msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
                 rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
