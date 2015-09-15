@@ -39,6 +39,8 @@
  */
 @protocol RZTouchIDDelegate <NSObject>
 
+@optional
+
 /**
  *  Called by deletePasswordWithIdentifier:completion: 
  * 
