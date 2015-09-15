@@ -65,7 +65,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 
 - (BOOL)touchIDAvailableForIdentifier:(NSString *)identifier
 {
-    return ( identifier != nil && identifier.length > 0 && [self.class touchIDAvailable] && [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier] );
+    return (identifier != nil && identifier.length > 0 && [self.class touchIDAvailable] && (![self.delegate respondsToSelector:@selector(touchID:shouldAddPasswordForIdentifier:)] || [self.delegate touchID:self shouldAddPasswordForIdentifier:identifier]));
 }
 
 - (instancetype)initWithKeychainServicePrefix:(NSString *)servicePrefix authenticationMode:(RZTouchIDMode)touchIDMode
@@ -119,7 +119,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
 
             if ( completion != nil ) {
                 dispatch_async(self.completionQueue, ^{
-                    if ( error == nil ) {
+                    if ( error == nil && [self.delegate respondsToSelector:@selector(touchID:didAddPasswordForIdentifier:)] ) {
                         [self.delegate touchID:self didAddPasswordForIdentifier:identifier];
                     }
                     completion(password, error);
@@ -171,7 +171,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
         if ( completion != nil ) {
             dispatch_async(self.completionQueue, ^{
                 // If we don't find the item in the keychain, it has the same net result as success
-                if ( error == nil || error.code == RZTouchIDErrorItemNotFound ) {
+                if ( (error == nil || error.code == RZTouchIDErrorItemNotFound) && [self.delegate respondsToSelector:@selector(touchID:didDeletePasswordForIdentifier:)] ) {
                     [self.delegate touchID:self didDeletePasswordForIdentifier:identifier];
                 }
                 completion(nil, error);
@@ -282,6 +282,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             case errSecItemNotFound: {
                 msg = NSLocalizedString(@"ERROR_ITEM_NOT_FOUND", nil);
                 rzTouchIDError = RZTouchIDErrorItemNotFound;
+                break;
+            }
+            case errSecUserCanceled: {
+                msg = NSLocalizedString(@"ERROR_USER_CANCELED", nil);
+                rzTouchIDError = RZTouchIDErrorUserCanceled;
                 break;
             }
             case errSecAuthFailed: {
