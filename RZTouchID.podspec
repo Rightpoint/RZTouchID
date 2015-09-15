@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RZTouchID"
-  s.version          = "1.1.0"
+  s.version          = "1.1.1"
   s.summary          = "A simple API for using TouchID to store and retrieve passwords from the keychain."
   s.description      = <<-DESC
                        Provides an interface to add/remove passwords in the keychain, and retrieve them using TouchID. Provides support for passcode and password fallback options.
