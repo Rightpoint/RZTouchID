@@ -233,11 +233,15 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     NSString *msg = nil;
     switch ((LAError)error.code) {
         case kLAErrorAuthenticationFailed:
-        case kLAErrorUserCancel:
         case kLAErrorUserFallback:
         case kLAErrorSystemCancel: {
             msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
             rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+            break;
+        }
+        case kLAErrorUserCancel: {
+            msg = NSLocalizedString(@"ERROR_USER_CANCELED", nil);
+            rzTouchIDError = RZTouchIDErrorUserCanceled;
             break;
         }
         case kLAErrorPasscodeNotSet:
