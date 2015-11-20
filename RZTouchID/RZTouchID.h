@@ -128,7 +128,11 @@ typedef NS_ENUM(NSUInteger, RZTouchIDError){
     /**
      *  Something else happened - check the localizedFailureReason for further details and refer to OSStatus or LAError for resolution steps.
      */
-    RZTouchIDErrorUnknownError
+    RZTouchIDErrorUnknownError,
+    /**
+     *  User tapped the fallback option
+     */
+    RZTouchIDErrorUserFallback
 };
 
 /**

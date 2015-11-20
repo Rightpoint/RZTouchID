@@ -95,6 +95,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
                     completion(nil, (__bridge NSError *)addError);
                 });
             }
+			
+			if ( accessObject != NULL )
+            {
+				CFRelease(accessObject);
+			}
             return;
         }
         
@@ -233,11 +238,19 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
     NSString *msg = nil;
     switch ((LAError)error.code) {
         case kLAErrorAuthenticationFailed:
-        case kLAErrorUserCancel:
-        case kLAErrorUserFallback:
         case kLAErrorSystemCancel: {
             msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
             rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+            break;
+        }
+        case kLAErrorUserFallback: {
+            msg = NSLocalizedString(@"ERROR_USER_FALLBACK", nil);
+            rzTouchIDError = RZTouchIDErrorUserFallback;
+            break;
+        }
+        case kLAErrorUserCancel: {
+            msg = NSLocalizedString(@"ERROR_USER_CANCELED", nil);
+            rzTouchIDError = RZTouchIDErrorUserCanceled;
             break;
         }
         case kLAErrorPasscodeNotSet:
@@ -292,6 +305,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             case errSecAuthFailed: {
                 msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
                 rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+				break;
             }
             default: {
                 msg = [@(error) stringValue];
