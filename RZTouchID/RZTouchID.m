@@ -95,6 +95,11 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
                     completion(nil, (__bridge NSError *)addError);
                 });
             }
+			
+			if ( accessObject != NULL ) {
+				CFRelease(accessObject);
+			}
+			
             return;
         }
         
@@ -292,6 +297,7 @@ NSString* const kRZTouchIDErrorDomain = @"com.raizlabs.touchID";
             case errSecAuthFailed: {
                 msg = NSLocalizedString(@"ERROR_ITEM_AUTHENTICATION_FAILED", nil);
                 rzTouchIDError = RZTouchIDErrorAuthenticationFailed;
+				break;
             }
             default: {
                 msg = [@(error) stringValue];
